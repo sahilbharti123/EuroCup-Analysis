@@ -23,7 +23,6 @@ One of the main challenges in evaluating player performance is how to combine a 
 So, in order to solve this issue, we used a statistic called Z-Score that gives each attribute equal weight. The Z-score is a popular tool for standardizing performance measurements. The z-score in statistics indicates how many standard deviations a number deviates from the mean. We use the following formula to calculate a z-score:
 
 Z = (X – n) / σ
-![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/07f7f8e4-4b04-44f2-a5a8-2bce0e117c1d)
 
 where:
 - X is a single raw data value
@@ -34,7 +33,11 @@ Mean is the average of the given set of values in the dataset.
 
 Standard deviation is the dispersion of a dataset relative to its mean.
 
+![Screenshot 2024-01-16 190542](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/50312738-3d03-41e9-9e11-edbb8b6f72a8)
+
 We selected the attributes mentioned and related to the Technical KPIs in Fig 1. The selected attributes from the dataset are shown in the table below.
+
+![Screenshot 2024-01-16 190542](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/3ec8f8c1-df15-4366-8b1e-4ca86d80984b)
 
 From the individual variables for the 4 different roles, the Z-scores were calculated individually for the KPIs and then added together to form a consolidated score. The functions select, filter, group by, summarise were used to do so. The scores were then arranged in decreasing order and top 4 players were selected from defenders, midfielders, forwards, and top 2 goalkeepers were selected. 
 
