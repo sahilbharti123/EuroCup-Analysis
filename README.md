@@ -46,16 +46,16 @@ The below players with top Z-scores were selected.
 ![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/2319ec6b-6975-4474-86b9-021657cd2eb9)
 
 ## Recursive feature elimination
-Now, let us assess the goal-scoring abilities of our forwards. We first need the variables which affect goal scoring the most. For this, we used Recursive feature elimination because it is effective at selecting those features in a dataset which are most relevant in predicting the target variable. (Brownlee, 2020) The target variable here is “Goals.” We needed to do a bit of data wrangling to fit the dataset in the model. We had all the variables in rows, we used pivot_wider function in tidyr library to convert the variables into column names. Then, we set all the NA values to 0. We created a new column of whether a player scored a goal or not. 
+Now, let us assess the goal-scoring abilities of our forwards. We first need the variables which affect goal scoring the most. For this, we used Recursive feature elimination because it is effective at selecting those features in a dataset which are most relevant in predicting the target variable. The target variable here is “Goals.” We needed to do a bit of data wrangling to fit the dataset in the model. We had all the variables in rows, we used pivot_wider function in tidyr library to convert the variables into column names. Then, we set all the NA values to 0. We created a new column of whether a player scored a goal or not. 
 
-When performing Recursive Feature Elimination (RFE) in R, we need to choose a method to control the model. We decided to utilize the CARET package, which offers a variety of RFE methods including random forest, naive bayes, bagged trees, and linear regression. We used the Random Forest function (rfFuncs) from the package because it offers an efficient way of calculating feature importance. (Bulut, 2021) In R, the set.seed() function is used when creating variables with random values to ensure reproducibility. By using set.seed(), the same random values are generated every time the code is run. (Zach, 2022)
+When performing Recursive Feature Elimination (RFE) in R, we need to choose a method to control the model. We decided to utilize the CARET package, which offers a variety of RFE methods including random forest, naive bayes, bagged trees, and linear regression. We used the Random Forest function (rfFuncs) from the package because it offers an efficient way of calculating feature importance. In R, the set.seed() function is used when creating variables with random values to ensure reproducibility. By using set.seed(), the same random values are generated every time the code is run.
 In order to implement this model, we utilized RFE to identify the top attributes. To visualize the importance of each feature in predicting the target variable, we used ggplot to create a bar graph of variable importance for the selected features.
 
- ![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/b4881821-1f52-4fd7-a144-5e9857267d7f)
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/b4881821-1f52-4fd7-a144-5e9857267d7f)
 The bar graph shows that “Attempts on target in penalty area” is the most important feature followed by “Attempts accuracy.” 
 
 ## Logistic Regression
-In order to predict the probability of goal scoring, we will use Logistic Regression, a statistical model commonly used for classification and prediction. The model calculates the probability of an event, such as "yes" or "no", based on the provided independent variables. In this case, the dependent variable "Goals" will be between 0 and 1, as it is a probability outcome. Logistic Regression is a type of generalised linear model and can be implemented in R using the glm() function, which returns a model object that can be further analyzed using summary(), fitted(), and predict() functions. (What Is Logistic Regression? | IBM, n.d.; Logistic Regression in R - an Example, 2017)
+In order to predict the probability of goal scoring, we will use Logistic Regression, a statistical model commonly used for classification and prediction. The model calculates the probability of an event, such as "yes" or "no", based on the provided independent variables. In this case, the dependent variable "Goals" will be between 0 and 1, as it is a probability outcome. Logistic Regression is a type of generalised linear model and can be implemented in R using the glm() function, which returns a model object that can be further analyzed using summary(), fitted(), and predict() functions.
 We fitted the model in Logistic regression and used predict () function to finally predict the probability of our forwards scoring a goal. 
 
 ## Result
@@ -66,20 +66,22 @@ The Pie Chart shows the proportion of goals scored by top 10 forwards in the tou
 
 ![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/db1ca3d7-3481-43b2-984a-8707cfb1521d)
 In the above figure, we notice that our top 4 defenders Laporte, Maguire, Kalas and Matviyenko were consistent in every skill which is the reason they had a good Z-Score. Players like Di Lorenzo whose Sprinting was outstanding and Stones whose Pass accuracy was excellent did not make to the top 4 because they underperformed in other skills like Clearances and Tackles Won. 
-If we see our top Goalkeepers, Pickford and Donnaruma (who was also the Player of the tournament) as per UEFA (UEFA European Championship Awards, 2022), Pickford had the highest number of Punches, Low Claims, Clearances, and successful clearances whereas Donnaruma had the highest number of High claims and second highest number of Punches. 
+If we see our top Goalkeepers, Pickford and Donnaruma (who was also the Player of the tournament) as per UEFA, Pickford had the highest number of Punches, Low Claims, Clearances, and successful clearances whereas Donnaruma had the highest number of High claims and second highest number of Punches. 
  
 ![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/6d44b7c6-3c08-4300-b055-fe5ad62117d1)
-Variables	Coefficient	Std. Error	Z value	Pr (>|z|)
-(Intercept)	-4.042819	0.402477	-10.045	<2e-16
-Attempts on target in penalty area	0.672493	0.305124	2.204	0.0275
-Attempts accuracy	0.010377	0.005263	1.972	0.0487
-Attempts on target	0.700778	0.395896	1.770	0.0767
-Attempts in open play from centre	0.420550	0.243679	1.726	0.0844
-Attempts on open play	0.615311	0.485930	1.266	0.2054
-Total attempts	-1.041703	0.422522	-2.465	0.0137
-Lost balls opposite half	0.036044	0.036044	0.944	0.3453
-Sprints	0.003460	0.003460	0.801	0.4233
-
 For analyzing the goal-scoring ability of our forwards, we used Logistic regression. We already know the Key performance indicators for Goal scoring using the RFE technique. When we applied Logistic regression to our selected indicators, we noticed that as per the model (Table 6), only three variables are statistically significant i.e. (whose p-value or Pr(|z|) is less than 0.05). Now, looking at Table 6, we see the coefficients of regression which are our KPIs, Goal scoring opportunity increases with an increase in “Attempts on target in penalty area”, “Attempts accuracy”, “Attempts on target”, “Attempts in open play from the centre”, “Attempts in open play”, “Lost balls in opposite half” and “Sprints” whereas it decreases with increase in “Total attempts.” We can observe this with the negative or positive sign from each coefficient. 
-Next, we need to know how each KPI contributes to the achievement of our goals. ‘We will change it for this by exponentiating the result (as shown in Table 7). This demonstrates that, while controlling for other variables, goal scoring increases by a factor of 2.01 for a single attempt on target and falls by 65% for an increase in total attempts. ‘(Mervisiano, 2021)
+Next, we need to know how each KPI contributes to the achievement of our goals. We will change it for this by exponentiating the result (as shown in Table 7). This demonstrates that, while controlling for other variables, goal scoring increases by a factor of 2.01 for a single attempt on target and falls by 65% for an increase in total attempts.
 
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/7a2a7b7a-1f3c-47ef-9e36-f23f43ef17fd)
+
+Using the Predict () function we find the Probabilities of the top 4 forwards scoring a goal as shown in the figure below. 
+
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/b2d351a7-9c71-4533-b699-3607abf55a1d)
+
+The ratio of deviance to residual degrees of freedom (deviance(fit)/df.residual(fit)) is used in statistical modeling to assess the fit of a model. The value suggests that the model is able to explain a significant proportion of the variation in the data.
+
+## Conclusion
+Our Goal was to come up with the top-performing team of the tournament which we were able to do successfully. We selected the top 14 players across various roles in the sport. Seven of the selected fourteen players were from the finalist teams of the tournament Italy and England which shows the dominance of the teams in the tournament. We visualized the skills of the players and noticed that consistency in every skill is more important than being excellent in one and below average in others. We can see that the Probability of goal scoring varies from 99% to 8% which is strange but also highlights the point in the introduction in which we mentioned that every skill has equal weightage in the game, goal scoring cannot be considered the only factor in analyzing a forward. 
+
+## Limitations
+In this study, we evaluated players using a limited number of KPIs, which might affect the accuracy of the predictions. Attributes such as strength, power, and speed were not taken into account. To make more precise predictions about goals scored, additional data such as distance and angle to the goal would have been beneficial. We used Logistic Regression to estimate the probability of a goal being scored, a model that can only predict binary outcomes (i.e. yes/no, 0/1, true/false), and not the exact number of goals a player will score. However, Logistic Regression has the limitation of assuming that the relationship between the independent and dependent variable is linear which can be untrue in certain situations. It is also sensitive to outliers and extreme values. We also employed Z-scores as a metric, which doesn't take into account the specifics of the dataset like range or frequency distribution. Z-scores are based on population data, when sample data is used the results may differ. To identify the most pertinent features for our target variable 'Goals' Recursive Feature Elimination (RFE) was used. Although, this model has the drawback of identifying redundant features among many independent variables. Additionally, RFE uses only one model, if the best feature subset changes across different models then the feature selection may change too.
