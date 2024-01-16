@@ -43,14 +43,15 @@ From the individual variables for the 4 different roles, the Z-scores were calcu
 
 The below players with top Z-scores were selected. 
 
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/2319ec6b-6975-4474-86b9-021657cd2eb9)
+
 ## Recursive feature elimination
 Now, let us assess the goal-scoring abilities of our forwards. We first need the variables which affect goal scoring the most. For this, we used Recursive feature elimination because it is effective at selecting those features in a dataset which are most relevant in predicting the target variable. (Brownlee, 2020) The target variable here is “Goals.” We needed to do a bit of data wrangling to fit the dataset in the model. We had all the variables in rows, we used pivot_wider function in tidyr library to convert the variables into column names. Then, we set all the NA values to 0. We created a new column of whether a player scored a goal or not. 
 
 When performing Recursive Feature Elimination (RFE) in R, we need to choose a method to control the model. We decided to utilize the CARET package, which offers a variety of RFE methods including random forest, naive bayes, bagged trees, and linear regression. We used the Random Forest function (rfFuncs) from the package because it offers an efficient way of calculating feature importance. (Bulut, 2021) In R, the set.seed() function is used when creating variables with random values to ensure reproducibility. By using set.seed(), the same random values are generated every time the code is run. (Zach, 2022)
 In order to implement this model, we utilized RFE to identify the top attributes. To visualize the importance of each feature in predicting the target variable, we used ggplot to create a bar graph of variable importance for the selected features.
 
- 
-Fig 2. Most important features of the model according to RFE
+ ![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/b4881821-1f52-4fd7-a144-5e9857267d7f)
 The bar graph shows that “Attempts on target in penalty area” is the most important feature followed by “Attempts accuracy.” 
 
 ## Logistic Regression
@@ -60,27 +61,25 @@ We fitted the model in Logistic regression and used predict () function to final
 ## Result
 We came out with our top-performing players of the tournament which are shown below. As you can see, Lorenzo Insigne was our top forward with a Z-Score of 57.83 followed by Pedri whose Z-Score is 51.31. Raheem Sterling and Memphis Depay were our 3rd and 4th forwards with a Z-Score of 41.25 and 40.51 respectively. Marco Verratti was our top Midfielder with a Z-Score of 35.44 followed by Dani Olmo who had a Z-score of 27.27. The third and fourth midfielders were Mason Mount and Pierre-Emile Hojbjerg with Z-Score of 27.33 and 25.17 respectively. Mykola Matviyenko was the top defender with a Z-Score of 16.73 followed by Tomas Kalas, Harry Maguire, and Aymeric Laporte who had Z-Scores of 14.61, 14.12, and 14.11 respectively. Jordan Pickford and Gianluigi Donnarumma are the top two goalkeepers with a Z-Score of 16.57 and 9.37 respectively.
 
-
-
-	
-
-
-
-
-
-
-
-
-
-Fig 3. Goals scored by top 10 Forwards
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/db75e92f-f544-47bc-a19b-86ed7ec081d0)
 The Pie Chart shows the proportion of goals scored by top 10 forwards in the tournament. It shows that Ronaldo scored the greatest number of goals followed by Kane and Sterling. A notable feature is that Ronaldo who scored the maximum number of goals in the tournament (5) is not in our top four forwards whereas Pedri, who did not score any goal is in our top 4. 
 
- 
-Fig 4. Heatmap comparing skills of the defenders. Red colour shows highest contribution and white shows the least contribution.
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/db1ca3d7-3481-43b2-984a-8707cfb1521d)
 In the above figure, we notice that our top 4 defenders Laporte, Maguire, Kalas and Matviyenko were consistent in every skill which is the reason they had a good Z-Score. Players like Di Lorenzo whose Sprinting was outstanding and Stones whose Pass accuracy was excellent did not make to the top 4 because they underperformed in other skills like Clearances and Tackles Won. 
 If we see our top Goalkeepers, Pickford and Donnaruma (who was also the Player of the tournament) as per UEFA (UEFA European Championship Awards, 2022), Pickford had the highest number of Punches, Low Claims, Clearances, and successful clearances whereas Donnaruma had the highest number of High claims and second highest number of Punches. 
  
-Fig 5. Top 4 Goalkeepers’ stats contribution
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/6d44b7c6-3c08-4300-b055-fe5ad62117d1)
+Variables	Coefficient	Std. Error	Z value	Pr (>|z|)
+(Intercept)	-4.042819	0.402477	-10.045	<2e-16
+Attempts on target in penalty area	0.672493	0.305124	2.204	0.0275
+Attempts accuracy	0.010377	0.005263	1.972	0.0487
+Attempts on target	0.700778	0.395896	1.770	0.0767
+Attempts in open play from centre	0.420550	0.243679	1.726	0.0844
+Attempts on open play	0.615311	0.485930	1.266	0.2054
+Total attempts	-1.041703	0.422522	-2.465	0.0137
+Lost balls opposite half	0.036044	0.036044	0.944	0.3453
+Sprints	0.003460	0.003460	0.801	0.4233
+
 For analyzing the goal-scoring ability of our forwards, we used Logistic regression. We already know the Key performance indicators for Goal scoring using the RFE technique. When we applied Logistic regression to our selected indicators, we noticed that as per the model (Table 6), only three variables are statistically significant i.e. (whose p-value or Pr(|z|) is less than 0.05). Now, looking at Table 6, we see the coefficients of regression which are our KPIs, Goal scoring opportunity increases with an increase in “Attempts on target in penalty area”, “Attempts accuracy”, “Attempts on target”, “Attempts in open play from the centre”, “Attempts in open play”, “Lost balls in opposite half” and “Sprints” whereas it decreases with increase in “Total attempts.” We can observe this with the negative or positive sign from each coefficient. 
 Next, we need to know how each KPI contributes to the achievement of our goals. ‘We will change it for this by exponentiating the result (as shown in Table 7). This demonstrates that, while controlling for other variables, goal scoring increases by a factor of 2.01 for a single attempt on target and falls by 65% for an increase in total attempts. ‘(Mervisiano, 2021)
 
