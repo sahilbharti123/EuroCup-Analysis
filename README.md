@@ -23,6 +23,7 @@ One of the main challenges in evaluating player performance is how to combine a 
 So, in order to solve this issue, we used a statistic called Z-Score that gives each attribute equal weight. The Z-score is a popular tool for standardizing performance measurements. The z-score in statistics indicates how many standard deviations a number deviates from the mean. We use the following formula to calculate a z-score:
 
 Z = (X – n) / σ
+![image](https://github.com/sahilbharti123/EuroCup-Analysis/assets/70895213/07f7f8e4-4b04-44f2-a5a8-2bce0e117c1d)
 
 where:
 - X is a single raw data value
